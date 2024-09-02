@@ -3,9 +3,9 @@ let gravity;
 let bgColor;
 
 let graphicBuffers = [];
-const raisingTrail = 6; //もともとの値: 15
-const kikuTrail = 6; //もともとの値: 30
-const botanTrail = 3; //もともとの値: 3
+const raisingTrail = 6;
+const kikuTrail = 6;
+const botanTrail = 3;
 const standardFrame = 60;
 
 /**
@@ -40,10 +40,11 @@ function setup() {
   stroke(255); // 線の色を設定
   strokeWeight(4); // 線の太さ
 
+  // graphicBuffersのサイズを初期化
   graphicBuffers = [
-    createGraphics(result.clientWidth, result.clientHeight),
-    createGraphics(result.clientWidth, result.clientHeight),
-    createGraphics(result.clientWidth, result.clientHeight),
+    createGraphics(width, height),
+    createGraphics(width, height),
+    createGraphics(width, height),
   ];
 
   frameRate(standardFrame);
@@ -75,9 +76,7 @@ function draw() {
   // canvasに反映
   blendMode(SCREEN);
   for (let i = 0; i < graphicBuffers.length; i++) {
-    graphicBuffers[i].background(0, 1);
-
-    image(graphicBuffers[i], 0, 0);
+    image(graphicBuffers[i], 0, 0, width, height); // バッファを新しいサイズにスケールして描画
   }
   blendMode(BLEND);
 }
@@ -85,5 +84,12 @@ function draw() {
 /** ウィンドウがリサイズされた時にp5jsが自動実行  */
 function windowResized() {
   const { width, height } = calcCanvasSize();
+
+  // canvasをリサイズ
   resizeCanvas(width, height);
+
+  // fireworksの位置をキャンバスサイズに合わせて調整
+  for (let i = 0; i < fireworks.length; i++) {
+    fireworks[i].resize(width, height);
+  }
 }

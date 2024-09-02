@@ -171,6 +171,11 @@ class Firework {
     }
   }
 
+  resize(newWidth, newHeight) {
+    this.pos.x = this.pos.x * (newWidth / oldWidth);
+    this.pos.y = this.pos.y * (newHeight / oldHeight);
+  }
+
   selectIndex(vector) {
     const xyMag = vector.x * vector.x + vector.y * vector.y;
     if (xyMag < 0.3) {
